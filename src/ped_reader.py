@@ -29,7 +29,7 @@ with open(file_path2) as r2:
 
 lead_snp = 'rs2384686'
 chr_n = '19'
-file_path2 = '../ukb_22828_c19_b0_v3.map'
+file_path2 = '../ukb_22828_c' + chr_n + '_b0_v3.map'
 with open(file_path2) as r2:
     line = r2.readline()
     count = 1
@@ -74,20 +74,20 @@ df_case['A2'] = '-'
 df_control['A2'] = '-'
 
 # generate phenotype
-file_path = '../ukb_22828_c19_b0_v3.ped'
+file_path = '../ukb_22828_c' + chr_n + '_b0_v3.ped'
 with open(file_path) as r:
     count = 0
     line = r.readline()
     while line:
         if(count in df_case['sample_index'].tolist()):
-            print(count)
+            #print(count)
             text = line
             A1 = text.split()[2*final_count - 2 + 6]
             A2 = text.split()[2*final_count - 2 + 6 + 1]
             df_case.loc[df_case['sample_index'] == count,'A1'] = A1
             df_case.loc[df_case['sample_index'] == count,'A2'] = A2
             #print(df_case)
-            df_case.to_csv('../datasets/final/ped_snp_case_' + lead_snp + '.csv',index=None)
+            #df_case.to_csv('../datasets/final/ped_snp_case_' + lead_snp + '.csv',index=None)
         if(count in df_control['sample_index'].tolist()):
             text = line
             A1 = text.split()[2*final_count - 2 + 6]
