@@ -1,6 +1,9 @@
+# using .ped file (generate from plink2)
+
 import pandas as pd
 import numpy as np
 import linecache
+import argparse
 
 '''
 # check .ped file columns
@@ -26,9 +29,18 @@ with open(file_path2) as r2:
     print(line)
     # all lines count (wc -l filename): 2087017 (*2=4174034)
 '''
+parser = argparse.ArgumentParser()
+parser.add_argument('--index','-i', default=0)
+args = parser.parse_args()
 
-lead_snp = 'rs2384686'
-chr_n = '19'
+case = '40'
+SNP_file = '../datasets/6p/ukb_poi' + case +'_6p.regenie'
+snp = pd.read_csv(SNP_file, sep='\t')
+i = int(args.index)
+
+lead_snp = snp['ID'][i]
+chr_n = str(snp['CHROM'][i])
+
 file_path2 = '../ukb_22828_c' + chr_n + '_b0_v3.map'
 with open(file_path2) as r2:
     line = r2.readline()
@@ -97,5 +109,5 @@ with open(file_path) as r:
         line = r.readline()
         count += 1
 
-df_case.to_csv('../datasets/final/ped_snp_case_' + lead_snp + '.csv',index=None)
-df_control.to_csv('../datasets/final/ped_snp_control_' + lead_snp + '.csv',index=None)
+df_case.to_csv('../datasets/final_6p/ped_snp_case_' + lead_snp + '.csv',index=None)
+df_control.to_csv('../datasets/final_6p/ped_snp_control_' + lead_snp + '.csv',index=None)

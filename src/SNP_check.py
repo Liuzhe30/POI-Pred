@@ -1,3 +1,5 @@
+# using bgen_reader
+
 import os
 from bgen_reader import read_bgen
 import pandas as pd
